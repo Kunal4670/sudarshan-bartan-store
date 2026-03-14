@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sudarshan Bartan Store — Kitchen & Stationery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream: #fdf6ee;
+      --warm-white: #fff9f2;
+      --terracotta: #c4683a;
+      --terracotta-dark: #a0532c;
+      --terracotta-light: #e8a07a;
+      --sage: #7a9e7e;
+      --sage-dark: #5c7d60;
+      --brown: #4a3728;
+      --brown-light: #7a5c46;
+      --text: #2e1f14;
+      --text-muted: #7a6558;
+      --border: #e8d9cc;
+      --shadow: rgba(74,55,40,0.10);
+      --radius: 12px;
+      --danger: #c0392b;
+      --danger-bg: #fff0ee;
+      --success: #2e7d32;
+      --success-bg: #e8f5e9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--brown);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      color: var(--cream);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+    .nav-logo span { color: var(--terracotta-light); }
+    .nav-links { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+    .nav-btn {
+      background: none; border: none;
+      color: #d9c4b5;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.42rem 0.9rem;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .nav-btn:hover, .nav-btn.active { background: var(--terracotta); color: #fff; }
+    .nav-btn.owner-btn { border: 1px solid var(--terracotta-light); color: var(--terracotta-light); }
+    .nav-btn.owner-btn:hover { background: var(--terracotta); color: #fff; border-color: transparent; }
+    .nav-btn.logout-btn { background: var(--terracotta-dark); color: #fff; }
+
+    /* ── HERO ── */
+    #hero {
+      background: linear-gradient(135deg, #3d2b1f 0%, #6b4226 55%, #a06040 100%);
+      padding: 5rem 2rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(196,104,58,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--terracotta);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    #hero h1 em { color: var(--terracotta-light); font-style: normal; }
+    #hero p { color: #c8b4a4; font-size: 1.05rem; max-width: 500px; margin: 0 auto 2rem; font-weight: 300; line-height: 1.7; }
+    .hero-cta {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: 0.85rem 2.2rem; border-radius: 30px;
+      font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.4px;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 18px rgba(196,104,58,0.35);
+    }
+    .hero-cta:hover { background: var(--terracotta-dark); transform: translateY(-2px); }
+
+    /* ── PAGES ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── SHOP ── */
+    #shop-page { padding: 2.5rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
+    .section-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--brown); }
+    .section-sub { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem; }
+    .search-bar {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: 30px; padding: 0.45rem 1rem;
+      box-shadow: 0 1px 6px var(--shadow);
+    }
+    .search-bar input {
+      border: none; background: none; font-family: 'Lato', sans-serif;
+      font-size: 0.9rem; color: var(--text); outline: none; width: 200px;
+    }
+    .search-bar span { color: var(--text-muted); }
+    .filter-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .filter-btn {
+      padding: 0.4rem 1.1rem; border-radius: 20px;
+      border: 1.5px solid var(--border); background: #fff;
+      color: var(--brown-light); font-family: 'Lato', sans-serif;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.18s; font-weight: 700;
+    }
+    .filter-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+    .filter-btn.active { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.4rem;
+    }
+    .product-card {
+      background: #fff; border-radius: var(--radius);
+      border: 1px solid var(--border); overflow: hidden;
+      box-shadow: 0 2px 10px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px var(--shadow); }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .product-img {
+      width: 100%; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .product-body { padding: 1rem 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
+    .product-category { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.3rem; }
+    .product-category.kitchen { color: var(--terracotta); }
+    .product-category.stationery { color: #5a7db5; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--brown); margin-bottom: 0.35rem; font-weight: 600; }
+    .product-desc { font-size: 0.82rem; color: var(--text-muted); flex: 1; line-height: 1.5; margin-bottom: 0.8rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 1.1rem; font-weight: 700; color: var(--terracotta); font-family: 'Playfair Display', serif; }
+    .stock-badge {
+      font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem;
+      border-radius: 10px; letter-spacing: 0.5px;
+    }
+    .stock-badge.in { background: #e8f5e9; color: var(--success); }
+    .stock-badge.out { background: var(--danger-bg); color: var(--danger); }
+
+    /* ── ABOUT ── */
+    #about-page { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; }
+    .about-card { background: #fff; border-radius: var(--radius); border: 1px solid var(--border); padding: 2.5rem; box-shadow: 0 2px 12px var(--shadow); }
+    .about-card h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--brown); margin-bottom: 1rem; }
+    .about-card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; font-size: 1rem; }
+    .about-highlights { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .highlight { flex: 1; min-width: 130px; background: var(--cream); border-radius: 10px; padding: 1.2rem; text-align: center; border: 1px solid var(--border); }
+    .highlight .hi { font-size: 1.9rem; margin-bottom: 0.4rem; }
+    .highlight p { font-size: 0.82rem; color: var(--brown-light); font-weight: 700; margin: 0; }
+
+    /* ── CONTACT ── */
+    #contact-page { padding: 3rem 2rem; max-width: 600px; margin: 0 auto; }
+    .contact-card { background: #fff; border-radius: var(--radius); border: 1px solid var(--border); padding: 2.5rem; box-shadow: 0 2px 12px var(--shadow); }
+    .contact-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--brown); margin-bottom: 1.5rem; }
+
+    /* ── SHARED FORM STYLES ── */
+    .form-field { margin-bottom: 1.1rem; }
+    .form-field label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--brown-light); margin-bottom: 0.35rem; letter-spacing: 0.5px; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 0.7rem 0.95rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: 'Lato', sans-serif; font-size: 0.92rem;
+      color: var(--text); background: var(--cream);
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--terracotta); }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .btn-primary {
+      background: var(--terracotta); color: #fff; border: none;
+      padding: 0.8rem 2rem; border-radius: 8px;
+      font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, transform 0.15s; letter-spacing: 0.4px;
+    }
+    .btn-primary:hover { background: var(--terracotta-dark); transform: translateY(-1px); }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .btn-full { width: 100%; }
+
+    /* ── WHATSAPP ── */
+    .whatsapp-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+      background: #25D366; color: #fff; border: none;
+      padding: 0.9rem 1.5rem; border-radius: 10px; width: 100%;
+      font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.3);
+      margin-bottom: 1.5rem;
+    }
+    .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+    .whatsapp-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.5px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .contact-info-row { display: flex; align-items: center; gap: 0.6rem; background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--brown-light); }
+    .contact-info-row strong { color: var(--brown); }
+
+    /* ── WHATSAPP ── */
+    .whatsapp-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+      background: #25D366; color: #fff; border: none;
+      padding: 0.9rem 1.5rem; border-radius: 10px; width: 100%;
+      font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.3);
+      margin-bottom: 1.5rem;
+    }
+    .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+    .whatsapp-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.5px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .contact-info-row { display: flex; align-items: center; gap: 0.6rem; background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--brown-light); }
+    .contact-info-row strong { color: var(--brown); }
+
+    /* ── LOGIN ── */
+    #login-page { padding: 4rem 2rem; display: flex; justify-content: center; }
+    .login-card {
+      background: #fff; border-radius: var(--radius); border: 1px solid var(--border);
+      padding: 2.5rem; max-width: 400px; width: 100%;
+      box-shadow: 0 4px 24px var(--shadow);
+    }
+    .login-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .login-card h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--brown); margin-bottom: 0.3rem; }
+    .login-card > p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+    .login-hint { font-size: 0.76rem; color: var(--text-muted); margin-top: 1rem; text-align: center; border-top: 1px solid var(--border); padding-top: 0.8rem; }
+
+    /* ── ADMIN ── */
+    #admin-page { padding: 2rem 2rem 4rem; max-width: 1150px; margin: 0 auto; }
+    .admin-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.8rem; flex-wrap: wrap; gap: 1rem; }
+    .admin-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--sage); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 0.28rem 0.85rem; border-radius: 20px; margin-bottom: 0.4rem; }
+    .admin-topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--brown); }
+    .admin-tabs { display: flex; gap: 0.5rem; }
+    .tab-btn {
+      padding: 0.5rem 1.2rem; border-radius: 8px; border: 1.5px solid var(--border);
+      background: #fff; color: var(--brown-light); font-family: 'Lato', sans-serif;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.18s;
+      position: relative;
+    }
+    .tab-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+    .tab-btn.active { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+    .tab-badge {
+      position: absolute; top: -6px; right: -6px;
+      background: var(--danger); color: #fff;
+      font-size: 0.65rem; font-weight: 700;
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.4rem; box-shadow: 0 1px 6px var(--shadow); }
+    .stat-card .stat-val { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--terracotta); font-weight: 700; }
+    .stat-card .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 0.2rem; }
+
+    /* Admin layout */
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .admin-layout { display: grid; grid-template-columns: 320px 1fr; gap: 1.8rem; align-items: start; }
+    @media(max-width: 820px) { .admin-layout { grid-template-columns: 1fr; } }
+
+    .add-form-card {
+      background: #fff; border-radius: var(--radius); border: 1px solid var(--border);
+      padding: 1.6rem; box-shadow: 0 2px 12px var(--shadow);
+      position: sticky; top: 88px;
+    }
+    .add-form-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--brown); margin-bottom: 1.1rem; }
+    .emoji-picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+    .emoji-opt {
+      width: 34px; height: 34px; border: 1.5px solid var(--border);
+      border-radius: 7px; background: var(--cream); cursor: pointer;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .emoji-opt:hover { border-color: var(--terracotta); }
+    .emoji-opt.selected { border-color: var(--terracotta); background: #fff4f0; box-shadow: 0 0 0 2px var(--terracotta-light); }
+
+    /* Image upload */
+    .img-upload-area {
+      border: 2px dashed var(--border); border-radius: 10px;
+      padding: 1.2rem; text-align: center; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: var(--cream); position: relative;
+    }
+    .img-upload-area:hover { border-color: var(--terracotta); background: #fff4f0; }
+    .img-upload-area.has-image { border-style: solid; border-color: var(--sage); }
+    .img-upload-area input[type=file] { display: none; }
+    .img-preview { width: 100%; height: 130px; object-fit: cover; border-radius: 7px; display: none; }
+    .img-upload-area.has-image .img-preview { display: block; }
+    .img-upload-placeholder { pointer-events: none; }
+    .img-upload-area.has-image .img-upload-placeholder { display: none; }
+    .img-remove-btn {
+      position: absolute; top: 6px; right: 6px;
+      background: var(--danger); color: #fff; border: none;
+      border-radius: 50%; width: 24px; height: 24px; font-size: 0.75rem;
+      cursor: pointer; display: none; align-items: center; justify-content: center;
+      font-weight: 700; line-height: 1;
+    }
+    .img-upload-area.has-image .img-remove-btn { display: flex; }
+
+    /* Product card image */
+    .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-img.emoji-mode { font-size: 3.5rem; }
+
+    /* Admin product list */
+    .admin-products-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .admin-products-header h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--brown); }
+    .admin-product-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .admin-product-item {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 0.9rem 1.1rem; display: flex; align-items: center; gap: 0.9rem;
+      box-shadow: 0 1px 5px var(--shadow); transition: box-shadow 0.2s;
+      animation: fadeIn 0.3s ease;
+    }
+    .admin-product-item:hover { box-shadow: 0 4px 14px var(--shadow); }
+    .admin-item-emoji { font-size: 1.9rem; min-width: 42px; text-align: center; }
+    .admin-item-info { flex: 1; min-width: 0; }
+    .admin-item-name { font-weight: 700; color: var(--brown); font-size: 0.95rem; }
+    .admin-item-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.12rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-item-right { display: flex; align-items: center; gap: 0.7rem; flex-shrink: 0; }
+    .admin-item-price { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--terracotta); font-weight: 600; }
+    .delete-btn {
+      background: var(--danger-bg); color: var(--danger);
+      border: 1.5px solid #f5c6c0; border-radius: 7px;
+      padding: 0.4rem 0.8rem; font-family: 'Lato', sans-serif;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      transition: all 0.18s; white-space: nowrap;
+    }
+    .delete-btn:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+    /* Enquiries panel */
+    .enquiry-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .enquiry-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.1rem 1.3rem; box-shadow: 0 1px 5px var(--shadow);
+      animation: fadeIn 0.3s ease; transition: box-shadow 0.2s;
+    }
+    .enquiry-card:hover { box-shadow: 0 4px 14px var(--shadow); }
+    .enquiry-card.unread { border-left: 3px solid var(--terracotta); }
+    .enquiry-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .enquiry-name { font-weight: 700; color: var(--brown); font-size: 0.95rem; }
+    .enquiry-email { font-size: 0.8rem; color: var(--text-muted); }
+    .enquiry-date { font-size: 0.75rem; color: var(--text-muted); }
+    .enquiry-msg { font-size: 0.88rem; color: var(--text); line-height: 1.6; margin-bottom: 0.7rem; }
+    .enquiry-actions { display: flex; gap: 0.6rem; }
+    .btn-sm {
+      padding: 0.35rem 0.8rem; border-radius: 6px; border: 1.5px solid var(--border);
+      background: #fff; color: var(--brown-light); font-family: 'Lato', sans-serif;
+      font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.18s;
+    }
+    .btn-sm.read { border-color: var(--sage); color: var(--sage-dark); }
+    .btn-sm.read:hover { background: var(--sage); color: #fff; border-color: var(--sage); }
+    .btn-sm.del { border-color: #f5c6c0; color: var(--danger); }
+    .btn-sm.del:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .unread-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); display: inline-block; margin-right: 5px; }
+
+    /* ── SHARED ── */
+    .msg-box {
+      border-radius: 8px; padding: 0.7rem 1rem; margin: 0.8rem 0;
+      font-size: 0.85rem; display: none;
+    }
+    .msg-box.success { background: var(--success-bg); color: var(--success); border: 1px solid #a5d6a7; }
+    .msg-box.error { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5c6c0; }
+    .msg-box.show { display: block; }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+    .empty-state .empty-icon { font-size: 2.8rem; margin-bottom: 0.8rem; }
+    .loading-spinner {
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem; color: var(--text-muted); font-size: 0.9rem; gap: 0.6rem;
+    }
+    .spinner {
+      width: 20px; height: 20px; border: 2px solid var(--border);
+      border-top-color: var(--terracotta); border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--brown); color: var(--cream);
+      padding: 0.85rem 1.3rem; border-radius: 10px;
+      font-size: 0.88rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      z-index: 9999; transform: translateY(100px); opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease; max-width: 320px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--brown); color: #b0967e; text-align: center; padding: 1.8rem; font-size: 0.85rem; margin-top: 3rem; }
+    footer strong { color: var(--terracotta-light); font-family: 'Playfair Display', serif; }
+
+    @media(max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-logo { font-size: 1.05rem; }
+      .nav-btn { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
+      #hero { padding: 3rem 1.2rem 2.5rem; }
+      .admin-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Sudarshan <span>Bartan</span> Store</div>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-btn active" onclick="showPage('home')">Home</button>
+    <button class="nav-btn" onclick="showPage('shop')">Shop</button>
+    <button class="nav-btn" onclick="showPage('about')">About</button>
+    <button class="nav-btn" onclick="showPage('contact')">Contact</button>
+    <button class="nav-btn owner-btn" id="ownerNavBtn" onclick="ownerNavClick()">🔐 Owner</button>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HOME PAGE -->
+<div class="page active" id="home-page">
+  <div id="hero">
+    <div class="hero-tag">✦ Kitchen & Stationery</div>
+    <h1>Welcome to<br/><em>Sudarshan Bartan Store</em></h1>
+    <p>Your trusted local shop for quality kitchen utensils and stationery — serving our community with pride.</p>
+    <button class="hero-cta" onclick="showPage('shop')">Browse Our Collection →</button>
+  </div>
+  <!-- OWNER LOGIN CARD (only on home page) -->
+  <div id="homeLoginSection" style="display:flex; justify-content:center; padding: 3rem 2rem 1rem;">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h2>Owner Login</h2>
+      <p>This area is restricted to the shop owner only.</p>
+      <div class="msg-box error" id="loginError">Incorrect username or password.</div>
+      <div class="form-field"><label>USERNAME</label><input type="text" id="loginUser" placeholder="Enter username"/></div>
+      <div class="form-field"><label>PASSWORD</label><input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <button class="btn-primary btn-full" id="loginBtn" onclick="doLogin()">Login →</button>
+      <div class="login-hint">Change credentials in your <code>.env</code> file</div>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP PAGE -->
+<div class="page" id="shop-page">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Our Products</h2>
+      <p class="section-sub">Fresh from our store — updated in real time</p>
+    </div>
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Search products..." oninput="debounceSearch()"/>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('kitchen', this)">🍳 Kitchen</button>
+    <button class="filter-btn" onclick="filterProducts('stationery', this)">✏️ Stationery</button>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <div class="loading-spinner" style="grid-column:1/-1"><div class="spinner"></div> Loading products…</div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="about-page">
+  <div class="about-card">
+    <h2>About Sudarshan Bartan Store</h2>
+    <p>We are a trusted local shop dedicated to bringing quality kitchen utensils and stationery to our community. Every item in our store is carefully selected for durability, usefulness, and great value.</p>
+    <p>From everyday cooking tools that make your kitchen shine, to stationery essentials for work and school — Sudarshan Bartan Store is your one-stop destination.</p>
+    <div class="about-highlights">
+      <div class="highlight"><div class="hi">🍳</div><p>Kitchen Essentials</p></div>
+      <div class="highlight"><div class="hi">✏️</div><p>Stationery & More</p></div>
+      <div class="highlight"><div class="hi">💛</div><p>Curated with Love</p></div>
+      <div class="highlight"><div class="hi">🏪</div><p>Local Shop</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="contact-page">
+  <div class="contact-card">
+    <h2>Get in Touch</h2>
+
+    <a class="whatsapp-btn" href="https://wa.me/919781505334" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat with us on WhatsApp
+    </a>
+
+    <div class="contact-info-row">
+      📞 <span><strong>+91 97815 05334</strong> &mdash; Call or WhatsApp anytime</span>
+    </div>
+
+    <div class="divider">OR SEND A MESSAGE BELOW</div>
+
+    <div class="form-field"><label>YOUR NAME</label><input type="text" id="cName" placeholder="e.g. Priya Sharma"/></div>
+    <div class="form-field"><label>EMAIL ADDRESS</label><input type="email" id="cEmail" placeholder="you@example.com"/></div>
+    <div class="form-field"><label>PHONE (OPTIONAL)</label><input type="tel" id="cPhone" placeholder="+91 98765 43210"/></div>
+    <div class="form-field"><label>MESSAGE</label><textarea id="cMsg" rows="4" placeholder="Write your message..."></textarea></div>
+    <button class="btn-primary" id="contactBtn" onclick="sendContact()">Send Message</button>
+    <div class="msg-box success" id="contactSuccess">✅ Thank you! We'll get back to you soon.</div>
+    <div class="msg-box error" id="contactError">❌ Something went wrong. Please try again.</div>
+  </div>
+</div>
+
+
+
+<!-- ADMIN PAGE -->
+<div class="page" id="admin-page">
+  <div class="admin-topbar">
+    <div>
+      <div class="admin-badge">✦ Owner Dashboard</div>
+      <h2>Manage Store</h2>
+    </div>
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="switchTab('products', this)">🛍️ Products</button>
+      <button class="tab-btn" onclick="switchTab('enquiries', this)" id="enquiriesTab">
+        📩 Enquiries
+        <span class="tab-badge" id="unreadBadge" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><div class="stat-val" id="statTotal">–</div><div class="stat-label">Total Products</div></div>
+    <div class="stat-card"><div class="stat-val" id="statKitchen">–</div><div class="stat-label">Kitchen Items</div></div>
+    <div class="stat-card"><div class="stat-val" id="statStationery">–</div><div class="stat-label">Stationery Items</div></div>
+    <div class="stat-card"><div class="stat-val" id="statEnquiries">–</div><div class="stat-label">Total Enquiries</div></div>
+  </div>
+
+  <!-- PRODUCTS PANEL -->
+  <div class="admin-panel active" id="panel-products">
+    <div class="admin-layout">
+      <div class="add-form-card">
+        <h3>➕ Add New Product</h3>
+        <div class="form-field"><label>PRODUCT NAME</label><input type="text" id="pName" placeholder="e.g. Ceramic Mixing Bowl"/></div>
+        <div class="form-field">
+          <label>CATEGORY</label>
+          <select id="pCategory" onchange="updateEmojiPicker(this.value)">
+            <option value="kitchen">🍳 Kitchen</option>
+            <option value="stationery">✏️ Stationery</option>
+          </select>
+        </div>
+        <div class="form-field"><label>DESCRIPTION</label><textarea id="pDesc" placeholder="Short product description..."></textarea></div>
+        <div class="form-field"><label>PRICE (₹)</label><input type="number" id="pPrice" placeholder="e.g. 499" min="0"/></div>
+        <div class="form-field"><label>STOCK QUANTITY</label><input type="number" id="pStock" placeholder="e.g. 20" min="0"/></div>
+        <div class="form-field">
+          <label>PRODUCT PHOTO</label>
+          <div class="img-upload-area" id="uploadArea" onclick="document.getElementById('photoInput').click()">
+            <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" onchange="previewImage(this)"/>
+            <img class="img-preview" id="imgPreview" src="" alt="Preview"/>
+            <button class="img-remove-btn" onclick="removeImage(event)">✕</button>
+            <div class="img-upload-placeholder">
+              <div style="font-size:2rem;margin-bottom:0.4rem">📷</div>
+              <div style="font-size:0.82rem;color:var(--text-muted)">Click to upload photo<br/><span style="font-size:0.75rem">JPG, PNG, WEBP — max 5MB</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>OR CHOOSE ICON (if no photo)</label>
+          <div class="emoji-picker" id="emojiPicker"></div>
+        </div>
+        <button class="btn-primary btn-full" id="addBtn" onclick="addProduct()">Add Product</button>
+        <div class="msg-box success" id="addSuccess">✅ Product added successfully!</div>
+        <div class="msg-box error" id="addError"></div>
+      </div>
+      <div>
+        <div class="admin-products-header">
+          <h3 id="adminListTitle">All Products</h3>
+        </div>
+        <div class="admin-product-list" id="adminProductList">
+          <div class="loading-spinner"><div class="spinner"></div> Loading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENQUIRIES PANEL -->
+  <div class="admin-panel" id="panel-enquiries">
+    <div class="enquiry-list" id="enquiryList">
+      <div class="loading-spinner"><div class="spinner"></div> Loading enquiries…</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Sudarshan Bartan Store</strong> — Kitchen & Stationery · Made with ♥ in India
+</footer>
+
+<script>
+  // ── EMOJI LISTS ──
+  const KITCHEN_EMOJIS = ['🍳','🥘','🫕','🍲','🫙','🧂','🥄','🔪','🫖','☕','🥗','🥣','🧁','🍽️','🥢'];
+  const STATIONERY_EMOJIS = ['✏️','📝','📒','📓','📔','🖊️','🖋️','📐','📏','🗒️','📌','📎','✂️','🖇️','📋'];
+  let selectedEmoji = '🍳';
+  let currentFilter = 'all';
+  let searchTimeout = null;
+
+  // ── API HELPERS ──
+  async function api(method, url, body) {
+    const opts = {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include'
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(url, opts);
+    return res.json();
+  }
+
+  // ── NAV ──
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page + '-page').classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const map = { home: 0, shop: 1, about: 2, contact: 3 };
+    if (map[page] !== undefined) document.querySelectorAll('.nav-btn')[map[page]].classList.add('active');
+    if (page === 'shop') loadShopProducts();
+    if (page === 'admin') { loadAdminProducts(); loadStats(); loadUnreadCount(); }
+    window.scrollTo(0, 0);
+  }
+
+  function ownerNavClick() {
+    checkSession().then(isOwner => {
+      showPage(isOwner ? 'admin' : 'home');
+    });
+  }
+
+  // ── SESSION CHECK ──
+  async function checkSession() {
+    try {
+      const data = await api('GET', '/api/auth/me');
+      return data.isOwner;
+    } catch { return false; }
+  }
+
+  async function initNav() {
+    const isOwner = await checkSession();
+    if (isOwner) setOwnerNav(true);
+  }
+
+  function setOwnerNav(on) {
+    const btn = document.getElementById('ownerNavBtn');
+    const loginSection = document.getElementById('homeLoginSection');
+    if (on) {
+      btn.textContent = '📋 Dashboard';
+      btn.classList.remove('owner-btn');
+      btn.classList.add('logout-btn');
+      btn.onclick = () => showPage('admin');
+      if (loginSection) loginSection.style.display = 'none';
+      if (!document.getElementById('logoutBtn')) {
+        const lb = document.createElement('button');
+        lb.className = 'nav-btn'; lb.textContent = 'Logout';
+        lb.id = 'logoutBtn'; lb.onclick = doLogout;
+        document.getElementById('navLinks').appendChild(lb);
+      }
+    } else {
+      btn.textContent = '🔐 Owner';
+      btn.classList.add('owner-btn');
+      btn.classList.remove('logout-btn');
+      btn.onclick = ownerNavClick;
+      if (loginSection) loginSection.style.display = 'flex';
+      const lb = document.getElementById('logoutBtn');
+      if (lb) lb.remove();
+    }
+  }
+
+  // ── AUTH ──
+  async function doLogin() {
+    const username = document.getElementById('loginUser').value.trim();
+    const password = document.getElementById('loginPass').value;
+    const btn = document.getElementById('loginBtn');
+    const err = document.getElementById('loginError');
+    err.classList.remove('show');
+    btn.disabled = true; btn.textContent = 'Logging in…';
+    try {
+      const data = await api('POST', '/api/auth/login', { username, password });
+      if (data.success) {
+        setOwnerNav(true);
+        document.getElementById('loginUser').value = '';
+        document.getElementById('loginPass').value = '';
+        showPage('admin');
+        showToast('Welcome back, Sudarshan! 👋');
+      } else {
+        err.classList.add('show');
+      }
+    } catch {
+      err.classList.add('show');
+    }
+    btn.disabled = false; btn.textContent = 'Login →';
+  }
+
+  async function doLogout() {
+    await api('POST', '/api/auth/logout');
+    setOwnerNav(false);
+    showPage('home');
+    showToast('Logged out successfully.');
+  }
+
+  // ── SHOP ──
+  async function loadShopProducts() {
+    const grid = document.getElementById('productsGrid');
+    const search = document.getElementById('searchInput').value.trim();
+    grid.innerHTML = `<div class="loading-spinner" style="grid-column:1/-1"><div class="spinner"></div> Loading…</div>`;
+    try {
+      let url = `/api/products?category=${currentFilter}`;
+      if (search) url += `&search=${encodeURIComponent(search)}`;
+      const data = await api('GET', url);
+      if (!data.success || !data.products.length) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🛒</div><p>No products found.</p></div>`;
+        return;
+      }
+      grid.innerHTML = data.products.map(p => `
+        <div class="product-card">
+          <div class="product-img ${p.image ? '' : 'emoji-mode'}">${p.image ? `<img src="/uploads/${p.image}" alt="${p.name}" loading="lazy"/>` : p.emoji}</div>
+          <div class="product-body">
+            <div class="product-category ${p.category}">${p.category === 'kitchen' ? '🍳 Kitchen' : '✏️ Stationery'}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.description}</div>
+            <div class="product-footer">
+              <div class="product-price">₹${Number(p.price).toLocaleString('en-IN')}</div>
+              <div class="stock-badge ${p.inStock ? 'in' : 'out'}">${p.inStock ? `${p.stock > 0 ? p.stock + ' left' : 'In Stock'}` : 'Out of Stock'}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚠️</div><p>Could not load products. Is the server running?</p></div>`;
+    }
+  }
+
+  function filterProducts(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadShopProducts();
+  }
+
+  function debounceSearch() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(loadShopProducts, 350);
+  }
+
+  // ── ADMIN ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    if (tab === 'enquiries') loadEnquiries();
+  }
+
+  async function loadStats() {
+    try {
+      const data = await api('GET', '/api/products/admin/stats');
+      if (data.success) {
+        document.getElementById('statTotal').textContent = data.stats.total;
+        document.getElementById('statKitchen').textContent = data.stats.kitchen;
+        document.getElementById('statStationery').textContent = data.stats.stationery;
+      }
+      const eq = await api('GET', '/api/enquiries');
+      if (eq.success) document.getElementById('statEnquiries').textContent = eq.enquiries.length;
+    } catch {}
+  }
+
+  async function loadUnreadCount() {
+    try {
+      const data = await api('GET', '/api/enquiries/unread/count');
+      const badge = document.getElementById('unreadBadge');
+      if (data.success && data.count > 0) {
+        badge.textContent = data.count;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    } catch {}
+  }
+
+  async function loadAdminProducts() {
+    const list = document.getElementById('adminProductList');
+    list.innerHTML = `<div class="loading-spinner"><div class="spinner"></div> Loading…</div>`;
+    try {
+      const data = await api('GET', '/api/products');
+      document.getElementById('adminListTitle').textContent = `All Products (${data.products.length})`;
+      if (!data.products.length) {
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><p>No products yet. Add your first one!</p></div>`;
+        return;
+      }
+      list.innerHTML = data.products.map(p => `
+        <div class="admin-product-item" id="ap-${p._id}">
+          <div class="admin-item-emoji">${p.image ? `<img src="/uploads/${p.image}" alt="${p.name}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;"/>` : p.emoji}</div>
+          <div class="admin-item-info">
+            <div class="admin-item-name">${p.name}</div>
+            <div class="admin-item-meta">${p.category === 'kitchen' ? '🍳 Kitchen' : '✏️ Stationery'} · Stock: ${p.stock} · ${p.description.substring(0, 45)}${p.description.length > 45 ? '…' : ''}</div>
+          </div>
+          <div class="admin-item-right">
+            <div class="admin-item-price">₹${Number(p.price).toLocaleString('en-IN')}</div>
+            <button class="delete-btn" onclick="deleteProduct('${p._id}', '${p.name.replace(/'/g,"\\'")}')">🗑 Delete</button>
+          </div>
+        </div>
+      `).join('');
+    } catch {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><p>Could not load products.</p></div>`;
+    }
+  }
+
+  async function addProduct() {
+    const name = document.getElementById('pName').value.trim();
+    const category = document.getElementById('pCategory').value;
+    const description = document.getElementById('pDesc').value.trim();
+    const price = parseFloat(document.getElementById('pPrice').value);
+    const stock = parseInt(document.getElementById('pStock').value) || 0;
+    const photoInput = document.getElementById('photoInput');
+    const btn = document.getElementById('addBtn');
+    const successEl = document.getElementById('addSuccess');
+    const errorEl = document.getElementById('addError');
+    successEl.classList.remove('show'); errorEl.classList.remove('show');
+
+    if (!name) { showMsgBox(errorEl, '⚠️ Please enter a product name.'); return; }
+    if (!description) { showMsgBox(errorEl, '⚠️ Please enter a description.'); return; }
+    if (!price || price <= 0) { showMsgBox(errorEl, '⚠️ Please enter a valid price.'); return; }
+
+    btn.disabled = true; btn.textContent = 'Adding…';
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('category', category);
+      formData.append('description', description);
+      formData.append('price', price);
+      formData.append('stock', stock);
+      formData.append('emoji', selectedEmoji);
+      if (photoInput.files[0]) formData.append('image', photoInput.files[0]);
+
+      const res = await fetch('/api/products', { method: 'POST', body: formData, credentials: 'include' });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('pName').value = '';
+        document.getElementById('pDesc').value = '';
+        document.getElementById('pPrice').value = '';
+        document.getElementById('pStock').value = '';
+        document.getElementById('pCategory').value = 'kitchen';
+        updateEmojiPicker('kitchen');
+        removeImage();
+        loadAdminProducts(); loadStats();
+        showMsgBox(successEl);
+        showToast(`"${name}" added! 🎉`);
+      } else {
+        showMsgBox(errorEl, '❌ ' + data.message);
+      }
+    } catch {
+      showMsgBox(errorEl, '❌ Server error. Please try again.');
+    }
+    btn.disabled = false; btn.textContent = 'Add Product';
+  }
+
+  // Image preview helpers
+  function previewImage(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('imgPreview').src = e.target.result;
+        document.getElementById('uploadArea').classList.add('has-image');
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  function removeImage(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('photoInput').value = '';
+    document.getElementById('imgPreview').src = '';
+    document.getElementById('uploadArea').classList.remove('has-image');
+  }
+
+  async function deleteProduct(id, name) {
+    if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+    try {
+      const data = await api('DELETE', `/api/products/${id}`);
+      if (data.success) {
+        document.getElementById('ap-' + id)?.remove();
+        loadStats();
+        showToast(`"${name}" deleted.`);
+        const list = document.getElementById('adminProductList');
+        if (!list.querySelector('.admin-product-item')) {
+          list.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><p>No products yet.</p></div>`;
+        }
+        const titleEl = document.getElementById('adminListTitle');
+        const count = list.querySelectorAll('.admin-product-item').length;
+        titleEl.textContent = `All Products (${count})`;
+      } else {
+        showToast('❌ ' + data.message);
+      }
+    } catch {
+      showToast('❌ Server error.');
+    }
+  }
+
+  // ── ENQUIRIES ──
+  async function loadEnquiries() {
+    const list = document.getElementById('enquiryList');
+    list.innerHTML = `<div class="loading-spinner"><div class="spinner"></div> Loading enquiries…</div>`;
+    try {
+      const data = await api('GET', '/api/enquiries');
+      if (!data.success || !data.enquiries.length) {
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon">📩</div><p>No enquiries yet.</p></div>`;
+        return;
+      }
+      list.innerHTML = data.enquiries.map(e => `
+        <div class="enquiry-card ${e.read ? '' : 'unread'}" id="eq-${e._id}">
+          <div class="enquiry-header">
+            <div>
+              ${!e.read ? '<span class="unread-dot"></span>' : ''}
+              <span class="enquiry-name">${e.name}</span>
+              <span class="enquiry-email"> · ${e.email}${e.phone ? ' · ' + e.phone : ''}</span>
+            </div>
+            <div class="enquiry-date">${new Date(e.createdAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}</div>
+          </div>
+          <div class="enquiry-msg">${e.message}</div>
+          <div class="enquiry-actions">
+            ${!e.read ? `<button class="btn-sm read" onclick="markRead('${e._id}')">✓ Mark as Read</button>` : '<span style="font-size:0.78rem;color:var(--sage-dark)">✓ Read</span>'}
+            <button class="btn-sm del" onclick="deleteEnquiry('${e._id}')">🗑 Delete</button>
+          </div>
+        </div>
+      `).join('');
+    } catch {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><p>Could not load enquiries.</p></div>`;
+    }
+  }
+
+  async function markRead(id) {
+    await api('PATCH', `/api/enquiries/${id}/read`);
+    loadEnquiries(); loadUnreadCount(); loadStats();
+  }
+
+  async function deleteEnquiry(id) {
+    if (!confirm('Delete this enquiry?')) return;
+    await api('DELETE', `/api/enquiries/${id}`);
+    document.getElementById('eq-' + id)?.remove();
+    loadUnreadCount(); loadStats();
+    showToast('Enquiry deleted.');
+  }
+
+  // ── CONTACT FORM ──
+  async function sendContact() {
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const phone = document.getElementById('cPhone').value.trim();
+    const message = document.getElementById('cMsg').value.trim();
+    const btn = document.getElementById('contactBtn');
+    const ok = document.getElementById('contactSuccess');
+    const err = document.getElementById('contactError');
+    ok.classList.remove('show'); err.classList.remove('show');
+
+    if (!name || !email || !message) { showMsgBox(err, '⚠️ Please fill in all required fields.'); return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const data = await api('POST', '/api/enquiries', { name, email, phone, message });
+      if (data.success) {
+        showMsgBox(ok);
+        document.getElementById('cName').value = '';
+        document.getElementById('cEmail').value = '';
+        document.getElementById('cPhone').value = '';
+        document.getElementById('cMsg').value = '';
+      } else {
+        showMsgBox(err, '❌ ' + data.message);
+      }
+    } catch {
+      showMsgBox(err, '❌ Server error. Please try again.');
+    }
+    btn.disabled = false; btn.textContent = 'Send Message';
+  }
+
+  // ── EMOJI PICKER ──
+  function updateEmojiPicker(category) {
+    const emojis = category === 'kitchen' ? KITCHEN_EMOJIS : STATIONERY_EMOJIS;
+    selectedEmoji = emojis[0];
+    document.getElementById('emojiPicker').innerHTML = emojis.map((e, i) => `
+      <div class="emoji-opt ${i === 0 ? 'selected' : ''}" onclick="selectEmoji(this,'${e}')">${e}</div>
+    `).join('');
+  }
+  function selectEmoji(el, emoji) {
+    document.querySelectorAll('.emoji-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected'); selectedEmoji = emoji;
+  }
+
+  // ── HELPERS ──
+  function showMsgBox(el, msg) {
+    if (msg) el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3500);
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  // ── INIT ──
+  updateEmojiPicker('kitchen');
+  initNav();
+</script>
+</body>
+</html>
