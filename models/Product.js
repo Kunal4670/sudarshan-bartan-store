@@ -30,10 +30,6 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: '🛍️'
   },
-  image: {
-    type: String,
-    default: ''
-  },
   inStock: {
     type: Boolean,
     default: true
