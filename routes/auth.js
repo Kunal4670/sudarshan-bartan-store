@@ -1,19 +1,27 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 // Login
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const ownerUsername = process.env.OWNER_USERNAME;
-  const ownerPassword = process.env.OWNER_PASSWORD;
+  try {
+    const { username, password } = req.body;
 
-  if (username === ownerUsername && password === ownerPassword) {
-    req.session.isOwner = true;
-    req.session.username = username;
-    return res.json({ success: true, message: 'Login successful' });
+    const ownerUsername = (process.env.OWNER_USERNAME || 'admin').trim();
+    const ownerPassword = (process.env.OWNER_PASSWORD || 'casa123').trim();
+
+    const enteredUser = (username || '').trim();
+    const enteredPass = (password || '').trim();
+
+    if (enteredUser === ownerUsername && enteredPass === ownerPassword) {
+      req.session.isOwner = true;
+      req.session.username = enteredUser;
+      return res.json({ success: true, message: 'Login successful' });
+    }
+
+    return res.status(401).json({ success: false, message: 'Invalid username or password' });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Server error during login' });
   }
-  return res.status(401).json({ success: false, message: 'Invalid username or password' });
 });
 
 // Logout
@@ -24,7 +32,7 @@ router.post('/logout', (req, res) => {
 
 // Check session
 router.get('/me', (req, res) => {
-  if (req.session.isOwner) {
+  if (req.session && req.session.isOwner) {
     return res.json({ isOwner: true, username: req.session.username });
   }
   res.json({ isOwner: false });
